@@ -1,5 +1,7 @@
 package com.example.gamedemoanima;
 
+import com.example.dialog.ButterFlyDialog;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -10,18 +12,20 @@ import android.webkit.WebViewClient;
 
 public class GameActivity extends Activity {
 	private WebView webview;
+	private ButterFlyDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_view);
+		dialog = new ButterFlyDialog(this); 
 		webview = (WebView) findViewById(R.id.webview);
-		// ÉèÖÃWebViewÊôĞÔ£¬ÄÜ¹»Ö´ĞĞJavascript½Å±¾
+		// ï¿½ï¿½ï¿½ï¿½WebViewï¿½ï¿½ï¿½Ô£ï¿½ï¿½Ü¹ï¿½Ö´ï¿½ï¿½Javascriptï¿½Å±ï¿½
 		webview.getSettings().setJavaScriptEnabled(true);
-		// ¼ÓÔØĞèÒªÏÔÊ¾µÄÍøÒ³
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ò³
 		webview.loadUrl("http://120.25.160.36:7754/index");
-		// ÉèÖÃWebÊÓÍ¼
+		// ï¿½ï¿½ï¿½ï¿½Webï¿½ï¿½Í¼
 		webview.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
@@ -34,7 +38,8 @@ public class GameActivity extends Activity {
 			public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				// TODO Auto-generated method stub
 				super.onPageStarted(view, url, favicon);
-				
+				dialog.show();
+				Log.i("info", "å¼€å§‹");
 			}
 			
 			
@@ -43,17 +48,21 @@ public class GameActivity extends Activity {
 			public void onPageFinished(WebView view, String url) {
 				// TODO Auto-generated method stub
 				super.onPageFinished(view, url);
+				Log.i("info", "ç»“æŸ");
+				dialog.dismiss();
 			}
+			
+			
 			
 		});
 	}
 
-	// ÉèÖÃ»ØÍË
-	// ¸²¸ÇActivityÀàµÄonKeyDown(int keyCoder,KeyEvent event)·½·¨
+	// ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½
+	// ï¿½ï¿½ï¿½ï¿½Activityï¿½ï¿½ï¿½onKeyDown(int keyCoder,KeyEvent event)ï¿½ï¿½ï¿½ï¿½
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if ((keyCode == KeyEvent.KEYCODE_BACK) && webview.canGoBack()) {
-			Log.i("info", "·µ»Ø");
-			webview.goBack(); // goBack()±íÊ¾·µ»ØWebViewµÄÉÏÒ»Ò³Ãæ
+			Log.i("info", "å›é€€");
+			webview.goBack(); // goBack()ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½WebViewï¿½ï¿½ï¿½ï¿½Ò»Ò³ï¿½ï¿½
 			return true;
 		}else{
 			finish();
